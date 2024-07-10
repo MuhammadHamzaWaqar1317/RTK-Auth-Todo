@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { signIn } from "../../../AxiosApi/endpoint/endpoint";
 import Form from "../../Components/Form/Form";
 import { setUserData } from "../../Redux/Slice/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import showError from "../../Components/Toaster/toaster";
 
 function index() {
   const userData = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [error, setError] = useState(false);
 
   const handleFinish = async (body) => {
     delete body["rememberMe"];
@@ -22,26 +24,16 @@ function index() {
       sessionStorage.setItem("token", res.data.token);
       console.log(userData);
       navigate("/home");
-      setError(false);
     } catch (error) {
       console.log(error);
-      setError(true);
+      showError();
     }
   };
 
   return (
     <>
-      {error && (
-        <Alert
-          message="Incorrect Username or Password"
-          closable={true}
-          afterClose={() => setError(false)}
-          type="error"
-          style={{ position: "fixed", right: "0" }}
-        />
-      )}
-
       <Form handleFinish={handleFinish} title="Sign In" renderRemeber={true} />
+      <ToastContainer />
     </>
   );
 }

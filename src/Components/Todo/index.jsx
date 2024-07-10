@@ -8,7 +8,7 @@ import {
   useGetTodosQuery,
   useUpdateTodoMutation,
 } from "../../Redux/reduxApi/Apis/todoApi";
-import { useSelector } from "react-redux";
+
 import Modal from "../Modal/Modal";
 
 function Todo() {
@@ -16,8 +16,7 @@ function Todo() {
   const { Title, Text } = Typography;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateTodo] = useUpdateTodoMutation();
-  const userData = useSelector((state) => state.userSlice.userData);
-
+  
   const [deleteTodo] = useDeleteTodoMutation();
   const [storeRecord, setStoreRecord] = useState("");
 
